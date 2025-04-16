@@ -1,0 +1,212 @@
+/* src/components/Header/Header.css */
+.header {
+  display: flex;
+  justify-content: center; /* Center the header content */
+  align-items: center;
+  padding: 0.4rem 2rem;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo {
+  height: 3rem;
+  width: auto;
+}
+
+.logo-text {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the navigation links and action buttons */
+  gap: 2rem;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #0062cc;
+}
+
+.nav-link.active {
+  color: #0062cc;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-button {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.nav-button.login {
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.nav-button.login:hover {
+  border-color: #0062cc;
+  color: #0062cc;
+}
+
+.nav-button.signup {
+  background-color: #0062cc;
+  color: white;
+}
+
+.nav-button.signup:hover {
+  background-color: #004a99;
+}
+
+.nav-button.admin-link {
+  background-color: #ff9800;
+  color: white;
+}
+
+.nav-button.admin-link:hover {
+  background-color: #f57c00;
+}
+
+.mobile-menu-button {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+
+@media (max-width: 992px) {
+  .nav-links {
+    gap: 1rem;
+  }
+  
+  .action-buttons {
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0.8rem 1.5rem;
+  }
+  
+  .mobile-menu-button {
+    display: block;
+  }
+
+  .navigation {
+    position: fixed;
+    top: 5rem;
+    left: 0;
+    right: 0;
+    background-color: white;
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-150%);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .navigation.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
+  
+  .nav-button {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
+/* Cart Icon */
+.cart-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: #333;
+  transition: transform 0.3s ease;
+  transform: translateY(0);
+}
+
+.cart-img {
+  width: 23px;
+  height: 23px;
+  transition: all 0.3s ease;
+}
+
+.cart-icon:hover .cart-img,
+.cart-icon:focus .cart-img {
+  color: #4285f4;
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: #ff3333;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  min-width: 18px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
