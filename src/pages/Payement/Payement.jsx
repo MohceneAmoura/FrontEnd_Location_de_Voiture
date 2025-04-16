@@ -2,7 +2,7 @@
 import React, { useContext, useState } from "react";
 import { CartContext } from "../../context/CartContext";
 import { Link, useNavigate } from "react-router-dom";
-import { FaArrowLeft, FaCreditCard, FaLock, FaCheckCircle } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaCreditCard, FaLock, FaCheckCircle } from "react-icons/fa";
 import "./payement.css";
 
 const Payement = () => {
@@ -97,6 +97,21 @@ const Payement = () => {
     }
   };
 
+  const formatExpiryDate = (value) => {
+    // Supprimer les caractères non numériques
+    const rawValue = value.replace(/\D/g, "");
+    let formattedValue = "";
+
+    if (rawValue.length > 0) {
+      formattedValue = rawValue.slice(0, 2); // Ajouter les deux premiers chiffres (mois)
+    }
+    if (rawValue.length > 2) {
+      formattedValue += "/" + rawValue.slice(2, 4); // Ajouter le slash et les deux chiffres suivants (année)
+    }
+
+    return formattedValue;
+  };
+
   return (
     <div className="payment-page-container">
       <div className="payment-page-wrapper">
@@ -149,41 +164,29 @@ const Payement = () => {
               {errors.cardNumber && <span className="payment-error-message">{errors.cardNumber}</span>}
             </div>
             <div className="payment-form-row">
-            <div className="payment-form-row">
-  <div className="payment-form-group half-width">
-    <label htmlFor="cardExpiry">Date d'expiration</label>
-    <input
-      type="text"
-      id="cardExpiry"
-      name="cardExpiry"
-      value={formData.cardExpiry}
-      onChange={(e) => {
-        // Appliquer un masque de saisie pour le format MM/YY
-        const rawValue = e.target.value.replace(/\D/g, ""); // Supprimer les caractères non numériques
-        let formattedValue = "";
-
-        if (rawValue.length > 0) {
-          formattedValue = rawValue.slice(0, 2); // Ajouter les deux premiers chiffres (mois)
-        }
-        if (rawValue.length > 2) {
-          formattedValue += "/" + rawValue.slice(2, 4); // Ajouter le slash et les deux chiffres suivants (année)
-        }
-
-        // Mettre à jour la valeur du champ avec le format MM/YY
-        setFormData({
-          ...formData,
-          cardExpiry: formattedValue,
-        });
-      }}
-      placeholder="MM/YY"
-      maxLength="5" // Limiter à 5 caractères (MM/YY)
-      className={errors.cardExpiry ? "error" : ""}
-    />
-    {errors.cardExpiry && (
-      <span className="payment-error-message">{errors.cardExpiry}</span>
-    )}
-  </div>
-</div>              <div className="payment-form-group half-width">
+              <div className="payment-form-group half-width">
+                <label htmlFor="cardExpiry">Date d'expiration</label>
+                <input
+                  type="text"
+                  id="cardExpiry"
+                  name="cardExpiry"
+                  value={formData.cardExpiry}
+                  onChange={(e) => {
+                    const formattedValue = formatExpiryDate(e.target.value);
+                    setFormData({
+                      ...formData,
+                      cardExpiry: formattedValue,
+                    });
+                  }}
+                  placeholder="MM/YY"
+                  maxLength="5" // Limiter à 5 caractères (MM/YY)
+                  className={errors.cardExpiry ? "error" : ""}
+                />
+                {errors.cardExpiry && (
+                  <span className="payment-error-message">{errors.cardExpiry}</span>
+                )}
+              </div>
+              <div className="payment-form-group half-width">
                 <label htmlFor="cardCVV">CVV</label>
                 <input
                   type="text"
@@ -203,7 +206,7 @@ const Payement = () => {
                 <FaArrowLeft /> Retour au panier
               </Link>
               <button className="payment-continue-button" onClick={handleContinue}>
-                Continuer <FaArrowLeft className="payment-arrow-right" />
+                Continuer <FaArrowRight />
               </button>
             </div>
           </div>
@@ -275,7 +278,7 @@ const Payement = () => {
                 <FaArrowLeft /> Retour
               </button>
               <button className="payment-continue-button" onClick={handleContinue}>
-                Vérifier la commande <FaArrowLeft className="payment-arrow-right" />
+                Vérifier la commande <FaArrowRight />
               </button>
             </div>
           </div>
@@ -289,22 +292,26 @@ const Payement = () => {
               <div className="payment-confirmation-block">
                 <h4>Véhicules réservés</h4>
                 <ul className="payment-confirmation-items">
-                  {cartItems.map((item, index) => (
-                    <li key={index} className="payment-confirmation-item">
-                      <div className="payment-item-info">
-                        <span className="payment-item-name">{item.name}</span>
-                        <span className="payment-item-duration">({item.duration} jour(s))</span>
-                      </div>
-                      <span className="payment-item-price">{item.totalPrice} DZG</span>
-                    </li>
-                  ))}
+                  {cartItems.length > 0 ? (
+                    cartItems.map((item, index) => (
+                      <li key={index} className="payment-confirmation-item">
+                        <div className="payment-item-info">
+                          <span className="payment-item-name">{item.name}</span>
+                          <span className="payment-item-duration">({item.duration} jour(s))</span>
+                        </div>
+                        <span className="payment-item-price">{item.totalPrice} DZG</span>
+                      </li>
+                    ))
+                  ) : (
+                    <li>Aucun véhicule dans votre panier</li>
+                  )}
                 </ul>
               </div>
               <div className="payment-confirmation-block">
                 <h4>Informations de paiement</h4>
                 <div className="payment-info-row">
                   <span>Carte:</span>
-                  <span>**** **** **** {formData.cardNumber.slice(-4)}</span>
+                  <span>**** **** **** {formData.cardNumber.slice(-4) || '****'}</span>
                 </div>
                 <div className="payment-info-row">
                   <span>Titulaire:</span>
@@ -348,7 +355,7 @@ const Payement = () => {
               </div>
               <div className="payment-success-info">
                 <span>Montant payé:</span>
-                <span>{finalTotal} DZG</span> {/* Utiliser finalTotal ici */}
+                <span>{finalTotal} DZG</span>
               </div>
             </div>
             <Link 
