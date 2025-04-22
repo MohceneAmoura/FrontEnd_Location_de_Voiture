@@ -31,7 +31,7 @@
 }
 
 .cart-container .cart-page { /* Contenu principal centré */
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -587,5 +587,98 @@
    .cart-container .clear-cart-btn {
       width: 100%; /* Pleine largeur */
       text-align: center;
+  }
+}
+/* Nouveaux styles pour les informations client */
+/* Styles optimisés pour les informations client */
+.cart-container .client-info-section {
+  margin-top: 1rem;
+  background-color: var(--gray-light);
+  border-radius: 8px;
+  padding: 1.2rem;
+  border: 1px solid var(--gray);
+}
+
+.cart-container .client-info-title {
+  font-size: 1.1rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.cart-container .client-info-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--primary-light);
+  border-radius: 2px;
+}
+
+.cart-container .client-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem 1.5rem;
+}
+
+.cart-container .client-info-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.3rem;
+}
+
+.cart-container .client-info-label {
+  font-weight: 600;
+  color: var(--secondary);
+  margin-bottom: 0.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.cart-container .client-info-label svg {
+  margin-right: 0.4rem;
+  color: var(--primary);
+}
+
+.cart-container .client-info-value {
+  color: var(--dark);
+  padding-left: 1.2rem;
+  word-break: break-word;
+  line-height: 1.3;
+}
+
+/* Items spécifiques qui prennent toute la largeur */
+.cart-container .client-info-item:nth-child(5),
+.cart-container .client-info-item:last-child {
+  grid-column: 1 / -1;
+}
+
+/* Style pour les dates */
+.cart-container .client-info-item:last-child .client-info-value {
+  font-family: 'Courier New', monospace;
+  background-color: rgba(74, 144, 226, 0.05);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  border-left: 3px solid var(--primary-light);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cart-container .client-info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cart-container .client-info-section {
+    padding: 1rem;
+  }
+  
+  .cart-container .client-info-value {
+    padding-left: 1.5rem;
   }
 }

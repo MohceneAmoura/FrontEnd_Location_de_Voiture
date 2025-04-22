@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../context/CartContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { FaTimes, FaCar, FaCalendarAlt, FaCreditCard, FaArrowLeft, FaShoppingBag, FaCheckCircle } from "react-icons/fa";
+import { FaTimes, FaCar, FaCalendarAlt, FaCreditCard, FaArrowLeft, FaShoppingBag, FaCheckCircle, FaUser, FaEnvelope, FaPhone, FaIdCard, FaMapMarkerAlt } from "react-icons/fa";
 import "./cart.css";
 
 const Cart = () => {
@@ -25,6 +25,18 @@ const Cart = () => {
 
   const handleCheckout = () => {
     navigate("/payement");
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  };
+
+  const formatTime = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
   };
 
   return (
@@ -97,6 +109,43 @@ const Cart = () => {
                             <span className="detail-label">Total:</span>
                             <span className="price">{item.totalPrice} DZG</span>
                           </div>
+                          
+                          {/* Nouvelles informations client */}
+{/* Section informations client améliorée */}
+{/* Section informations client optimisée */}
+{item.client && (
+  <div className="client-info-section">
+    <h4 className="client-info-title"><FaUser /> Informations Client</h4>
+    <div className="client-info-grid">
+      <div className="client-info-item">
+        <span className="client-info-label"><FaUser /> Nom</span>
+        <span className="client-info-value">{item.client.firstName} {item.client.lastName}</span>
+      </div>
+      <div className="client-info-item">
+        <span className="client-info-label"><FaEnvelope /> Email</span>
+        <span className="client-info-value">{item.client.email}</span>
+      </div>
+      <div className="client-info-item">
+        <span className="client-info-label"><FaPhone /> Téléphone</span>
+        <span className="client-info-value">{item.client.phoneNumber}</span>
+      </div>
+      <div className="client-info-item">
+        <span className="client-info-label"><FaIdCard /> Permis</span>
+        <span className="client-info-value">{item.client.drivingLicenseId}</span>
+      </div>
+      <div className="client-info-item">
+        <span className="client-info-label"><FaMapMarkerAlt /> Lieu</span>
+        <span className="client-info-value">{item.client.pickupLocation}</span>
+      </div>
+      <div className="client-info-item">
+        <span className="client-info-label"><FaCalendarAlt /> Dates</span>
+        <span className="client-info-value">
+          {formatDate(item.startDate)} {formatTime(item.startDate)} - {formatDate(item.endDate)} {formatTime(item.endDate)}
+        </span>
+      </div>
+    </div>
+  </div>
+)}
                         </div>
 
                         <button

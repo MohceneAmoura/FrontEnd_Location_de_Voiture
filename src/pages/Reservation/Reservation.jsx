@@ -15,7 +15,11 @@ import {
   FaTrash,
   FaSpinner,
   FaFilter,
-  FaSearch
+  FaSearch,
+  FaUser,
+  FaEnvelope,
+  FaPhone,
+  FaIdCard
 } from 'react-icons/fa';
 import './Reservation.css';
 
@@ -145,7 +149,10 @@ const Reservation = () => {
     const matchesFilter = filter === 'all' || res.status === filter;
     const matchesSearch = searchTerm === '' || 
       (res.name && res.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (res.id && res.id.toLowerCase().includes(searchTerm.toLowerCase()));
+      (res.id && res.id.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (res.client && res.client.firstName && res.client.firstName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (res.client && res.client.lastName && res.client.lastName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (res.client && res.client.email && res.client.email.toLowerCase().includes(searchTerm.toLowerCase()));
     return matchesFilter && matchesSearch;
   });
 
@@ -171,7 +178,7 @@ const Reservation = () => {
             <FaSearch className="search-icon" />
             <input 
               type="text" 
-              placeholder="Rechercher par véhicule ou ID..." 
+              placeholder="Rechercher par véhicule, client ou ID..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="search-input"
@@ -233,11 +240,65 @@ const Reservation = () => {
               {filteredReservations.map((reservation) => (
                 <div key={reservation.id} className={`reservation-card status-${reservation.status}`}>
                   <div className="reservation-header">
-                  <h3>Réservation #{reservation.id ? String(reservation.id).slice(-6) : 'N/A'}</h3>
+                    <h3>Réservation #{reservation.id ? String(reservation.id).slice(-6) : 'N/A'}</h3>
                     {getStatusBadge(reservation.status)}
                   </div>
 
                   <div className="reservation-details">
+                    {/* Section Client - Nouvelle section */}
+                    {reservation.client && (
+  <div className="detail-section client-section">
+    <h4><FaUser /> Informations Client</h4>
+    <div className="client-info-grid">
+      <div className="client-info-item">
+        <div className="client-info-label">
+          <FaUser className="info-icon" /> Nom complet
+        </div>
+        <div className="client-info-value">
+          {reservation.client.firstName} {reservation.client.lastName}
+        </div>
+      </div>
+      
+      <div className="client-info-item">
+        <div className="client-info-label">
+          <FaEnvelope className="info-icon" /> Email
+        </div>
+        <div className="client-info-value">
+          {reservation.client.email || 'Non spécifié'}
+        </div>
+      </div>
+      
+      <div className="client-info-item">
+        <div className="client-info-label">
+          <FaPhone className="info-icon" /> Téléphone
+        </div>
+        <div className="client-info-value">
+          {reservation.client.phoneNumber || 'Non spécifié'}
+        </div>
+      </div>
+      
+      <div className="client-info-item">
+        <div className="client-info-label">
+          <FaIdCard className="info-icon" /> Permis
+        </div>
+        <div className="client-info-value">
+          {reservation.client.drivingLicenseId || 'Non spécifié'}
+        </div>
+      </div>
+      
+      {reservation.client.pickupLocation && (
+        <div className="client-info-item">
+          <div className="client-info-label">
+            <FaCar className="info-icon" /> Lieu de prise
+          </div>
+          <div className="client-info-value">
+            {reservation.client.pickupLocation}
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+)}
                     {/* Section Dates */}
                     <div className="detail-section">
                       <h4><FaCalendarAlt /> Dates & Durée</h4>
