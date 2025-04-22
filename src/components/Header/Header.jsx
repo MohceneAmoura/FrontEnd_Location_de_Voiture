@@ -1,9 +1,9 @@
+//C:\Users\aimen\car-rental\src\components\Header\Header.jsx
 import React, { useState, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaBars, FaTimes, FaCar, FaUserCircle } from "react-icons/fa";
 import { CartContext } from "../../context/CartContext";
 import "./header.css";
-import logo from "../../assets/Lo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,9 +26,10 @@ const Header = () => {
     <header className="header">
       <div className="header-container">
         {/* Logo and Title */}
-        <div className="logo-title">
-      <span className="app-title">AutoLibre🚗</span>
-    </div>
+        <Link to="/" className="logo-title">
+          <span className="app-title">AutoLibre</span>
+        </Link>
+
         {/* Mobile menu button */}
         <button
           className="mobile-menu-button"
@@ -50,7 +51,7 @@ const Header = () => {
             <Link to="/contact" className={`nav-link ${isActive("/contact")}`} onClick={handleLinkClick}>
               Contact
             </Link>
-            <Link to="/add-car" className="nav-link" onClick={handleLinkClick}>
+            <Link to="/add-car" className={`nav-link ${isActive("/add-car")}`} onClick={handleLinkClick}>
               Louer ma voiture
             </Link>
           </div>
