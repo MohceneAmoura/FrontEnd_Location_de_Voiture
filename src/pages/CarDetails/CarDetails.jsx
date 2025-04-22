@@ -126,7 +126,7 @@ const CarDetails = () => {
             <div className="car-details-container">
                 <div className="car-header">
                     <h1>{car.name}</h1>
-                    <div className="price-badge">{car.price}€/jour</div>
+                    <div className="price-badge">{car.price}DZG/jour</div>
                 </div>
 
                 <div className="car-content">

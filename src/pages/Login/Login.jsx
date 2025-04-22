@@ -1,9 +1,9 @@
 // src/pages/Login/Login.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaEnvelope, FaLock, FaGoogle, FaFacebook } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaGoogle, FaFacebook, FaKey } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
 import './login.css';
 
 const Login = () => {
@@ -17,18 +17,95 @@ const Login = () => {
     // Ici, vous pourriez implémenter la logique d'authentification
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        delayChildren: 0.3,
+        staggerChildren: 0.1 
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 }
+  };
+
   return (
     <div className="login-page">
+      <div className="road-animation">
+        <div className="road-line"></div>
+        <div className="road-line"></div>
+        <div className="road-line"></div>
+      </div>
+      
       <Header />
+      
       <div className="login-container">
-        <div className="login-card">
+        <motion.div 
+          className="login-card"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="dashboard-decoration">
+            <div className="speedometer">
+              <div className="speedometer-dial"></div>
+              <div className="speedometer-needle"></div>
+            </div>
+            <div className="steering-wheel"></div>
+          </div>
+          
           <div className="login-header">
-            <h1>Connexion</h1>
-            <p>Bienvenue sur AutoLibre 🚗✨, louez votre véhicule en quelques clics</p>
+            <motion.h1
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+            >
+              Connexion AutoLibre
+            </motion.h1>
+            
+            <motion.div
+              className="car-animation-container"
+              initial={{ x: -100 }}
+              animate={{ x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <div className="car-silhouette">
+                <div className="car-body"></div>
+                <div className="car-window"></div>
+                <div className="car-wheel front-wheel"></div>
+                <div className="car-wheel back-wheel"></div>
+                <div className="car-light"></div>
+              </div>
+            </motion.div>
+            
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="tagline"
+            >
+              Bienvenue sur AutoLibre 🚗✨, votre partenaire de mobilité préféré
+            </motion.p>
           </div>
 
-          <form onSubmit={handleSubmit} className="login-form">
-            <div className="form-group">
+          <motion.form 
+            onSubmit={handleSubmit} 
+            className="login-form"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <div className="form-section-title">
+              <div className="section-icon"><FaKey /></div>
+              <h3>Accédez à votre compte</h3>
+            </div>
+            
+            <motion.div className="form-group" variants={itemVariants}>
               <label htmlFor="email">Email</label>
               <div className="input-with-icon">
                 <FaEnvelope className="input-icon" />
@@ -41,9 +118,9 @@ const Login = () => {
                   required
                 />
               </div>
-            </div>
+            </motion.div>
 
-            <div className="form-group">
+            <motion.div className="form-group" variants={itemVariants}>
               <label htmlFor="password">Mot de passe</label>
               <div className="input-with-icon">
                 <FaLock className="input-icon" />
@@ -56,9 +133,9 @@ const Login = () => {
                   required
                 />
               </div>
-            </div>
+            </motion.div>
 
-            <div className="form-options">
+            <motion.div className="form-options" variants={itemVariants}>
               <div className="remember-me">
                 <input
                   type="checkbox"
@@ -71,34 +148,104 @@ const Login = () => {
               <Link to="/forgot-password" className="forgot-password">
                 Mot de passe oublié?
               </Link>
-            </div>
+            </motion.div>
 
-            <button type="submit" className="login-button">
+            <motion.button 
+              type="submit" 
+              className="login-button"
+              variants={itemVariants}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               Se connecter
-            </button>
+            </motion.button>
 
-            <div className="social-login">
+            <motion.div className="social-login" variants={itemVariants}>
               <p>Ou connectez-vous avec</p>
               <div className="social-buttons">
-                <button type="button" className="google-button">
+                <motion.button 
+                  type="button" 
+                  className="google-button"
+                  whileHover={{ scale: 1.05, backgroundColor: "#f2f2f2" }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <FaGoogle /> Google
-                </button>
-                <button type="button" className="facebook-button">
+                </motion.button>
+                <motion.button 
+                  type="button" 
+                  className="facebook-button"
+                  whileHover={{ scale: 1.05, backgroundColor: "#f2f2f2" }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <FaFacebook /> Facebook
-                </button>
+                </motion.button>
               </div>
-            </div>
-          </form>
+            </motion.div>
+          </motion.form>
 
-          <div className="register-link">
+          <motion.div 
+            className="register-link"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2 }}
+          >
             <p>
               Vous n'avez pas de compte?{' '}
-              <Link to="/signup">Créer un compte</Link>
+              <Link to="/signup" className="animated-link">Créer un compte</Link>
             </p>
-          </div>
-        </div>
+          </motion.div>
+          
+          <motion.div 
+            className="benefits car-benefits"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.4 }}
+          >
+            <h3>Avantages des membres AutoLibre</h3>
+            <ul>
+              <li>
+                <div className="benefit-icon-container">
+                  <span className="benefit-icon">⚡</span>
+                </div>
+                <div className="benefit-content">
+                  <h4>Réservation Express</h4>
+                  <p>Processus simplifié en quelques clics</p>
+                </div>
+              </li>
+              <li>
+                <div className="benefit-icon-container">
+                  <span className="benefit-icon">💰</span>
+                </div>
+                <div className="benefit-content">
+                  <h4>Tarifs exclusifs</h4>
+                  <p>Économisez jusqu'à 15% sur vos locations</p>
+                </div>
+              </li>
+              <li>
+                <div className="benefit-icon-container">
+                  <span className="benefit-icon">🔄</span>
+                </div>
+                <div className="benefit-content">
+                  <h4>Kilométrage illimité</h4>
+                  <p>Sur une sélection de véhicules</p>
+                </div>
+              </li>
+              <li>
+                <div className="benefit-icon-container">
+                  <span className="benefit-icon">🏆</span>
+                </div>
+                <div className="benefit-content">
+                  <h4>Programme Fidélité AutoMiles</h4>
+                  <p>Cumulez des points à chaque location</p>
+                </div>
+              </li>
+            </ul>
+          </motion.div>
+          
+          <div className="car-decoration bottom-car"></div>
+        </motion.div>
       </div>
-      <Footer />
+
     </div>
   );
 };

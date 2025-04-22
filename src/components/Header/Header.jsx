@@ -1,4 +1,3 @@
-//C:\Users\aimen\car-rental\src\components\Header\Header.jsx
 import React, { useState, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaBars, FaTimes, FaCar, FaUserCircle } from "react-icons/fa";
@@ -26,12 +25,10 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-container">
-        <div className="logo-container">
-          <Link to="/vehicules">
-            <img src={logo} alt="AUTOUSB" className="logo" />
-          </Link>
-        </div>
-
+        {/* Logo and Title */}
+        <div className="logo-title">
+      <span className="app-title">AutoLibre🚗</span>
+    </div>
         {/* Mobile menu button */}
         <button
           className="mobile-menu-button"

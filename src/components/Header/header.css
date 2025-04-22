@@ -1,9 +1,10 @@
 /* src/components/Header/Header.css */
+/* Modifiez le style existant du header pour mieux gérer l'espace */
 .header {
   display: flex;
-  justify-content: center; /* Center the header content */
+  justify-content: space-between; /* Modifié de flex-end à space-between */
   align-items: center;
-  padding: 0.4rem 2rem;
+  padding: 0.7rem 2rem;
   background-color: #fff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   position: sticky;
@@ -11,17 +12,18 @@
   z-index: 100;
 }
 
+/* Ajustez le header-container */
 .header-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: center; /* Centre verticalement */
   width: 100%;
   max-width: 1100px;
+  margin: 0 auto;
 }
 
 .logo-container {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 0.5rem;
 }
 
@@ -209,4 +211,35 @@
   min-width: 18px;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+/* Ajoutez ces styles en haut du fichier Header.css */
+.logo-title {
+  margin-right: auto; /* Pousse tout le contenu vers la droite */
+  display: flex;
+  align-items: center;
+}
+
+.app-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0062cc;
+  margin-left: 1rem;
+}
+
+
+
+/* Ajustez la navigation pour la version mobile */
+@media (max-width: 768px) {
+  .logo-title {
+    margin-right: 0;
+  }
+  
+  .app-title {
+    font-size: 1.3rem;
+    margin-left: 0;
+  }
+  
+  .header {
+    padding: 0.8rem 1rem;
+  }
 }
