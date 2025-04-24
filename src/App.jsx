@@ -1,6 +1,7 @@
 //C:\Users\aimen\car-rental\src\App.jsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { CartProvider } from "./context/CartContext"; 
+import { CartProvider } from "./context/CartContext";
+
 import Home from "./pages/Home/Home";
 import Vehicule from "./pages/Vehicule/Vehicule";
 import Contact from "./pages/Contact/Contact";
@@ -12,6 +13,7 @@ import Payement from "./pages/Payement/Payement"; // Import the Payement compone
 import AddCar from "./pages/AddCar/AddCar"; // Ajout de la page d'ajout de voiture
 import AdminApproval from './pages/AdminApproval/AdminApproval';
 import Reservation from './pages/Reservation/Reservation'; // Importez le composant Reservation
+import Profile from './pages/Profile/Profile'; // Import du composant Profile
 
 const App = () => {
   return (
@@ -25,10 +27,11 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/car/:id" element={<CarDetails />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/payement" element={<Payement />} /> {/* Add the Payement route */}          
+          <Route path="/payement" element={<Payement />} /> {/* Add the Payement route */}
           <Route path="/add-car" element={<AddCar />} />
           <Route path="/reservation" element={<Reservation />} /> {/* Ajoutez cette ligne */}
-          <Route path="/admin/approval" element={<AdminApproval />} />          
+          <Route path="/admin/approval" element={<AdminApproval />} />
+          <Route path="/profile" element={<Profile />} /> {/* Nouvelle route pour le profil */}
         </Routes>
       </CartProvider>
     </Router>

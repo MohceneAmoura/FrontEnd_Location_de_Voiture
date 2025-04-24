@@ -1,6 +1,6 @@
 // src/pages/Login/Login.jsx
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaEnvelope, FaLock, FaGoogle, FaFacebook, FaKey } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import Header from '../../components/Header/Header';
@@ -10,14 +10,27 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Login attempt with:', { email, password, rememberMe });
-    // Ici, vous pourriez implémenter la logique d'authentification
+    setError('');
+
+    // Vérification des identifiants de démonstration
+    if (email === 'mohammed.alami@gmail.com' && password === '123') {
+      // Simulation d'authentification réussie
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('userEmail', email);
+      
+      // Redirection vers la page de profil
+      navigate('/profile');
+    } else {
+      setError('Email ou mot de passe incorrect');
+    }
   };
 
-  // Animation variants
+  // Animations
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -104,6 +117,16 @@ const Login = () => {
               <div className="section-icon"><FaKey /></div>
               <h3>Accédez à votre compte</h3>
             </div>
+            
+            {error && (
+              <motion.div 
+                className="error-message"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                {error}
+              </motion.div>
+            )}
             
             <motion.div className="form-group" variants={itemVariants}>
               <label htmlFor="email">Email</label>
@@ -245,7 +268,6 @@ const Login = () => {
           <div className="car-decoration bottom-car"></div>
         </motion.div>
       </div>
-
     </div>
   );
 };
